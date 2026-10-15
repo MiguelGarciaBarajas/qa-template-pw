@@ -1,0 +1,29 @@
+Title format:
+QA | <Section> | <Short defect summary>
+
+Description format (Jira wiki markup):
+
+*Issue:*
+<What is broken in the app. Include legacy parity expectation when applicable.>
+
+*Acceptance Criteria:*
+1) <Expected behavior #1>
+2) <Expected behavior #2>
+3) <Expected behavior #3>
+
+*Repro Steps:*
+1. <Step 1>
+2. <Step 2>
+3. <Step 3>
+4. <Step 4>
+
+*Evidence:*
+!<screenshot-1.png>|thumbnail!
+!<screenshot-2.png>|thumbnail!
+!<screenshot-3.png>|thumbnail!
+{{<network-log.json>}}
+
+Rules:
+- Put evidence in the bug description under *Evidence:* when opening the bug.
+- Use comments for post-fix/deploy validation evidence only.
+- Keep all Jira content in English.

@@ -1,0 +1,21 @@
+{
+  "_comment": "Maps Jira Fix Version / ticket text to a TestRail project + functional suite. Replace the PLACEHOLDER entries with your products. Regex strings are matched case-insensitively. Override the file path with TESTRAIL_PRODUCTS_CONFIG.",
+  "projectNameContains": "",
+  "allProductsPattern": "\\ball\\s+products?\\b",
+  "smokeSuitePattern": "smoke",
+  "defaultFunctionalSuitePattern": "functional",
+  "products": [
+    {
+      "code": "PRODUCT_A",
+      "tokenPatterns": ["\\bPLACEHOLDER product a\\b", "\\bproduct-a\\b"],
+      "projectLastSegment": "PLACEHOLDER product a",
+      "functionalSuitePattern": "functional"
+    },
+    {
+      "code": "PRODUCT_B",
+      "tokenPatterns": ["\\bPLACEHOLDER product b\\b", "\\bproduct-b\\b"],
+      "projectLastSegment": "PLACEHOLDER product b",
+      "functionalSuitePattern": "functional"
+    }
+  ]
+}

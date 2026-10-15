@@ -1,0 +1,35 @@
+{
+  "compilerOptions": {
+    "target": "ES2022",
+    "module": "ES2022",
+    "moduleResolution": "bundler",
+    "strict": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "outDir": "dist",
+    "rootDir": ".",
+    "resolveJsonModule": true,
+    "allowSyntheticDefaultImports": true
+  },
+  "include": ["scripts/**/*", "tests/**/*"],
+  "exclude": [
+    "node_modules",
+    "dist",
+    "artifacts",
+    "evidence",
+    "workspace",
+    "scripts/temp-*",
+    "scripts/debug-*",
+    "scripts/explore-*",
+    "scripts/inspect-*",
+    "scripts/manual-*",
+    "scripts/publish-[0-9]*",
+    "scripts/publish-*.ts",
+    "scripts/test-llm*",
+    "scripts/tr-*",
+    "scripts/validate-[0-9]*",
+    "scripts/validate-*.ts",
+    "scripts/vendor-*",
+    "scripts/get-issue-debug.ts"
+  ]
+}

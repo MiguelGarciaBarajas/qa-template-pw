@@ -1,0 +1,63 @@
+node_modules/
+dist/
+.env
+
+# Test artifacts — never commit
+artifacts/
+evidence/
+playwright-report/
+test-results/
+*.trace.zip
+*.webm
+*.png
+*.jpg
+*.jpeg
+
+# Auth state — contains session tokens, never commit
+.auth/
+
+# Local state
+*.db
+*.log
+runner-output*.txt
+
+# Editor
+.vscode/*
+!.vscode/mcp.json
+.idea/
+
+# Machine-specific corporate CA bundle for Node TLS (Teams delivery)
+scripts/corp-ca-bundle.pem
+
+# Local browser/session output
+.playwright-mcp/
+reports/
+workspace/
+scripts/__pycache__/
+
+# Generated snapshots and one-off investigation scripts
+scripts/epic-*-snapshot*.json
+scripts/*-snapshot-20*.json
+scripts/fetch-epic-snapshot-20*.mjs
+scripts/generate-status-report-20*.py
+scripts/generate-session-report.py
+scripts/temp-*
+scripts/_tmp-*
+scripts/debug-*
+scripts/explore-*
+scripts/get-issue-debug.ts
+scripts/inspect-*
+scripts/manual-*
+scripts/publish-[0-9]*
+scripts/test-llm*
+scripts/tr-*
+scripts/validate-[0-9]*
+scripts/vendor-*
+
+# Local scratch exports and evidence summaries
+li-*.md
+sharebox*.yml
+imgedit.yml
+nav-elements.json
+jira-*-*.json
+tempo-*.json

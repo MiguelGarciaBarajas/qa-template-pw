@@ -1,0 +1,5 @@
+{
+  "_meta": {
+    "description": "Per-validator health. consecutiveFails >= 3 marks a validator stale and falls back to the agent."
+  }
+}

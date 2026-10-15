@@ -1,0 +1,39 @@
+{
+  "name": "qa-brain-template",
+  "version": "1.0.0",
+  "description": "QA Second Brain — <Product Name> QA automation and exploratory testing agent",
+  "type": "module",
+  "scripts": {
+    "cdp:start": "npx tsx scripts/cdp-start.ts",
+    "smartlearn:auth": "npx tsx scripts/smartlearn-auth.ts",
+    "preflight": "npx tsx scripts/preflight.ts --agent --auto-start-cdp",
+    "agent": "npx tsx scripts/agent-validate.ts",
+    "agent:auto": "npm run preflight && npx tsx scripts/agent-validate.ts",
+    "agent:pro": "npm run preflight && npx tsx scripts/agent-validate.ts --max-steps 60",
+    "mcp:ticket": "npx tsx scripts/mcp-ticket.ts",
+    "ticket-flow": "npx tsx scripts/ticket-flow.ts",
+    "post-validation": "npx tsx scripts/post-validation.ts",
+    "testrail:import": "npx tsx scripts/import-testrail-cases.ts",
+    "explore": "npx tsx scripts/qa-explorer.ts",
+    "dashboard": "python dashboard.py",
+    "dashboard:rft": "npx tsx scripts/rft-dashboard.ts",
+    "test": "npx playwright test",
+    "build": "tsc --noEmit"
+  },
+  "dependencies": {
+    "axios": "^1.7.9",
+    "dotenv": "^16.4.7",
+    "form-data": "^4.0.6",
+    "jimp": "^1.6.0",
+    "openai": "^6.45.0",
+    "otpauth": "^9.5.1",
+    "otplib": "^13.4.1",
+    "playwright": "^1.50.1"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.50.1",
+    "@types/node": "^22.10.7",
+    "tsx": "^4.19.2",
+    "typescript": "^5.7.3"
+  }
+}

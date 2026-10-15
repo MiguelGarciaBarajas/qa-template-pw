@@ -1,0 +1,78 @@
+# Daily QA status report for epic PROJ-1 — unattended (cloud cron).
+#
+# Runs every weekday morning, pulls live epic numbers from Jira, and uploads
+# the paste-ready .txt + .docx as a workflow artifact. This is the "truly
+# unattended" path: it runs on GitHub's infra, no local machine required.
+#
+# SETUP (one-time): add these repo secrets under
+#   Settings > Secrets and variables > Actions > New repository secret
+#     JIRA_BASE_URL   (e.g. https://jira.example.com)
+#     JIRA_USER
+#     JIRA_TOKEN
+#     TEAMS_WEBHOOK_PRIMARY     (Teams Workflows URL for the primary chat/channel)
+#     TEAMS_WEBHOOK_SECONDARY   (optional Teams Workflows URL for a second chat/channel)
+name: Daily Status Report
+
+on:
+  workflow_dispatch: {}       # allow manual runs from the Actions tab
+  schedule:
+    # 22:00 UTC = 17:00 (5 PM) America/Chicago during CDT (summer).
+    # In CST (winter) this fires at 16:00 local — bump to '0 23 * * *' if you
+    # want a fixed 17:00 CST. Runs every day.
+    - cron: '0 22 * * *'
+
+permissions:
+  contents: read
+
+jobs:
+  report:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install dependencies
+        run: |
+          npm ci
+          pip install python-docx
+
+      - name: Validate required secrets
+        env:
+          JIRA_BASE_URL: ${{ secrets.JIRA_BASE_URL }}
+          JIRA_USER: ${{ secrets.JIRA_USER }}
+          JIRA_TOKEN: ${{ secrets.JIRA_TOKEN }}
+        run: |
+          missing=""
+          [ -z "$JIRA_BASE_URL" ] && missing="$missing JIRA_BASE_URL"
+          [ -z "$JIRA_USER" ]     && missing="$missing JIRA_USER"
+          [ -z "$JIRA_TOKEN" ]    && missing="$missing JIRA_TOKEN"
+          if [ -n "$missing" ]; then
+            echo "::error::Missing required repo secret(s):$missing"
+            echo "Go to  Settings > Secrets and variables > Actions  and add the missing secrets."
+            exit 1
+          fi
+          echo "All required secrets are present."
+
+      - name: Generate daily status report
+        env:
+          JIRA_BASE_URL: ${{ secrets.JIRA_BASE_URL }}
+          JIRA_USER: ${{ secrets.JIRA_USER }}
+          JIRA_TOKEN: ${{ secrets.JIRA_TOKEN }}
+          TEAMS_WEBHOOK_PRIMARY: ${{ secrets.TEAMS_WEBHOOK_PRIMARY }}
+          TEAMS_WEBHOOK_SECONDARY: ${{ secrets.TEAMS_WEBHOOK_SECONDARY }}
+        run: node scripts/run-daily-report.mjs
+
+      - name: Upload report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: qa-status-report
+          path: artifacts/QA_Status_Report_*
+          if-no-files-found: error
